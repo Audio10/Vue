@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Curso de Vue</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <form @submit.prevent="submit" method="POST">
+            <h2>¿Cuáles son tus cursos favoritos?</h2>
+            <template v-for="curso in cursos">
+                <!-- El @checked es un evento -->
+                <curso :curso="curso" @checked="selectCurso"> </curso>
+
+            </template>
+            <button type="submit">Enviar</button>
+
+        </form>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        Vue.component('curso', {
+            props: ['curso'],
+            methods: {
+                onchange: function(ev) {
+                    this.$emit('checked', this.curso.value,ev.target.checked)
+                }
+            },
+            template: `
+                <div>
+                    <input type="checkbox" v-bind:id="curso.value" 
+                    v-bind:value="curso.value" @change="onchange">
+                    <label for="v-bind:value">{{ curso.nombre }}</label>
+                </div>
+            `
+        })
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                cursos: [
+                    { nombre: 'Curso de Introduccion a Vue.js', value: 'vue' },
+                    { nombre: 'Curso de SEO', value: 'seo' },
+                    { nombre: 'Curso de React y Redux', value: 'react' },
+                    { nombre: 'Curso de Growth Marketing1', value: 'growth' }
+                ],
+                cursosSeleccionados: []
+            },
+            methods: {
+                submit: function () {
+                    console.log('Se ejecuto el metodo submit')
+                    console.log(this.cursosSeleccionados)
+                },
+                selectCurso: function(curso, checked){
+                    if (checked) {
+                        this.cursosSeleccionados.push(curso)
+                    }else{
+                        let index = this.cursosSeleccionados.indexOf(curso)
+                        this.cursosSeleccionados.splice(index,1)
+                    }
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>
