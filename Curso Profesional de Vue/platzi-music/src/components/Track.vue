@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card
+  .card(v-if = "track && track.album")
     .card-image
       figure.image.is-1by1
         img(:src="track.album.images[0].url")
@@ -15,11 +15,13 @@
           p.subtitle.is-6 {{ track.artists[0].name}}
       
       .content
-        small {{ track.duration_ms}}
+        small {{ track.duration_ms | ms-to-mm}}
         nav.leave
           .level-left
-            a.level-item
+            button.level-item.button.is-primary
               span.icon.is-small(@click="selectTrack") ▶️
+            button.level-item.button.is-warning
+              span.icon.is-small(@click="goToTrack(track.id)") 🗺
 
 </template>
 
@@ -34,10 +36,18 @@ export default {
   methods: {
     // Este metodo es un metodo establecido que va a llamar al objeto padre
     selectTrack() {
+      // Si no hay preview retorna nada!
+      if (!this.track.preview_url) { return }
       // $emit genera un evento en el componente padre
       this.$emit("select", this.track.id)
 
       this.$bus.$emit('set-track', this.track)
+    },
+
+    goToTrack (id) {
+      // Si no hay preview retorna nada!
+      if (!this.track.preview_url) { return }
+      this.$router.push({ name: 'track', params: { id } })
     }
   }
 };
