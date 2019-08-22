@@ -26,7 +26,10 @@
 </template>
 
 <script>
+import trackMixin from '@/mixins/track'
+
 export default {
+  mixins: [trackMixin],
   props: {
     // tipo de dato que va a recibir y si es requerida
     // el objeto props se comporta como data.
@@ -34,15 +37,6 @@ export default {
   },
 
   methods: {
-    // Este metodo es un metodo establecido que va a llamar al objeto padre
-    selectTrack() {
-      // Si no hay preview retorna nada!
-      if (!this.track.preview_url) { return }
-      // $emit genera un evento en el componente padre
-      this.$emit("select", this.track.id)
-
-      this.$bus.$emit('set-track', this.track)
-    },
 
     goToTrack (id) {
       // Si no hay preview retorna nada!
@@ -52,7 +46,3 @@ export default {
   }
 };
 </script>
-
-
-<style lang="css">
-</style>
