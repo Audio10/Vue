@@ -29,6 +29,7 @@
 import trackMixin from '@/mixins/track'
 
 export default {
+  name: "Track",
   mixins: [trackMixin],
   props: {
     // tipo de dato que va a recibir y si es requerida

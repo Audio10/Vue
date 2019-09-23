@@ -9,23 +9,16 @@
     p 
       audio(controls, :src="track.preview_url")
 
-
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      track: {}
-    };
-  },
-
-  created() {
-    this.$bus.$on("set-track", track => {
-      this.track = track
-    })
+  name: "Player",
+  computed: {
+    ...mapState(['track'])
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

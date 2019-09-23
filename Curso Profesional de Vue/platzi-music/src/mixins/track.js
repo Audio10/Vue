@@ -1,15 +1,11 @@
 const trackMixin = {
   methods: {
-    // Este metodo es un metodo establecido que va a llamar al objeto padre
-    selectTrack() {
+    selectTrack () {
       // Si no hay preview retorna nada!
       if (!this.track.preview_url) { return }
-      // $emit genera un evento en el componente padre
-      this.$emit("select", this.track.id)
-
-      this.$bus.$emit('set-track', this.track)
+      this.$store.commit('setTrack', this.track)
     }
-  },
+  }
 }
 
 export default trackMixin

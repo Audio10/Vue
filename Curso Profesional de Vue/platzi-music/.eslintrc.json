@@ -3,10 +3,7 @@
         "browser": true,
         "es6": true
     },
-    "extends": [
-        "plugin:vue/essential",
-        "airbnb-base"
-    ],
+    "extends": "standard",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -16,8 +13,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "vue"
+        "vue",
+        "html"
     ],
     "rules": {
+        "no-new":0
     }
 }
